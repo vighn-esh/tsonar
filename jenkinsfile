@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    environment {
+        SONAR_HOST_URL = 'http://13.233.61.220/'
+        SONAR_LOGIN = credentials('sqp_1f2770090e1583fcb81add5a4ece48c14bbf3853')
+        PROJECT_KEY = 'Sonar-test'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerImage = docker.image('sonarsource/sonar-scanner-cli:latest')
+                    scannerImage.pull()
+                    scannerImage.inside {
+                        withSonarQubeEnv('EXPERSONARQUBE') {
+                            sh '''
+                                sonar-scanner \
+                                -Dsonar.projectKey=${PROJECT_KEY} \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=${SONAR_HOST_URL} \
+                                -Dsonar.login=${SONAR_LOGIN}
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+    }
+}
