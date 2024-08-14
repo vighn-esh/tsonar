@@ -1,0 +1,13 @@
+name: Test Self-Hosted Runner
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+    steps:
+      - name: Print Runner Name
+        run: echo "Running on $(hostname)"
