@@ -35,4 +35,4 @@ calculator.evaluate();
 // Output:
 // Calculator display: 2
 // Calculator display: 2
-// Calculator display: 4
+
