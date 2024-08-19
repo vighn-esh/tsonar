@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted-runner  # This tells GitHub to run the job on a self-hosted runner
+    runs-on: self-hosted  # This tells GitHub to run the job on a self-hosted runner
     steps:
       - uses: actions/checkout@v2
         with:
