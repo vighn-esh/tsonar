@@ -1,27 +1,39 @@
-
-name: Build
+name: SonarQube Analysis
 
 on:
   push:
     branches:
-      - master
-
+      - develop
 
 jobs:
-  build:
-    name: Build
+  sonarqube:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "18.x"
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Test and coverage
+      run: yarn test --coverage
+
+    - name: Install SonarScanner CLI
+      run: |
+        wget -O sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.0.2966-linux.zip
+        unzip sonar-scanner.zip -d $HOME/sonar-scanner
+        export PATH="$HOME/sonar-scanner/sonar-scanner-5.0.0.2966-linux/bin:$PATH"
+
+    - name: SonarQube Scan
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=sonar-testing \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
