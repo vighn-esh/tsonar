@@ -9,5 +9,5 @@ jobs:
   test-runner:
     runs-on: self-hosted
     steps:
-      - name: Print Runner Name
+      - name: Print Runner Namer
         run: echo "Running on $(hostname)"
