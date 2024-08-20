@@ -2,7 +2,7 @@
 
 A class based calculator implementation with functions for evaluating mathematical expressions. 
 
-## Properties
+## Propertie
 
 - `currentTotal`: holds the current running total of the calculator
 - `currentOperator`: holds the active operator for the calculator
