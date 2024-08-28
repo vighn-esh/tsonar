@@ -42,9 +42,9 @@ jobs:
       run: pwd
 
     - name: Clean up _work directory
+      if: always()  # Ensures this step runs even if the previous steps fail
       run: |
         echo "Cleaning up _work directory..."
         cd ..
         cd ..
-        pwd
         rm -rf ./*
