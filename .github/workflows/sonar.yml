@@ -38,7 +38,8 @@ jobs:
     - name: Print working directory
       run: pwd
 
-    - name: Clean up working directory
+    - name: Clean up all files in the current directory
       run: |
-        echo "Cleaning up _work directory..."
-        rm -rf _work
+        echo "Cleaning up all files in the current working directory..."
+        rm -rf ./*
+
