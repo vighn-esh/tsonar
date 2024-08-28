@@ -3,7 +3,7 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   sonarqube:
@@ -44,6 +44,4 @@ jobs:
     - name: Clean up _work directory
       run: |
         echo "Cleaning up _work directory..."
-        cd /home/ubuntu/actions-runner/_work/tsonar/tsonar
-        rm -rf /home/ubuntu/actions-runner/_work/*
-
+        rm -rf $GITHUB_WORKSPACE/../*
