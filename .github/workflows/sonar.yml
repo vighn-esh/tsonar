@@ -24,7 +24,7 @@ jobs:
     - name: Download Latest SonarQube Scanner
       run: |
         wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-        unzip sonar-scanner-cli-5.0.1.3006-linux.zip -d $HOME
+        unzip -o sonar-scanner-cli-5.0.1.3006-linux.zip -d $HOME
         echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
 
     - name: SonarQube scan
@@ -44,4 +44,7 @@ jobs:
     - name: Clean up _work directory
       run: |
         echo "Cleaning up _work directory..."
-        rm -rf $GITHUB_WORKSPACE/../*
+        cd ..
+        cd ..
+        pwd
+        rm -rf ./*
