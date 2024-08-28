@@ -3,7 +3,7 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - develop
+      - self-hosted
 
 jobs:
   sonarqube:
