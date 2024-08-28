@@ -27,11 +27,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-    - name: Clean up working directory
-      if: always()  # Ensure this runs even if previous steps fail
-      run: |
-        echo "Cleaning up working directory..."
-        cd ..
-        cd ..
-        pwd
-        rm -rf ./*
+  
