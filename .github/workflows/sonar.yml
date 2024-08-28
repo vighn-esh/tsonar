@@ -3,7 +3,7 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   sonarqube:
@@ -35,7 +35,10 @@ jobs:
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
-    - name: Clean up entire working directory
+    - name: Print working directory
+      run: pwd
+
+    - name: Clean up working directory
       run: |
-        rm -rf $GITHUB_WORKSPACE/*
-        echo "Entire working directory cleanup complete"
+        echo "Cleaning up _work directory..."
+        rm -rf _work
