@@ -3,11 +3,11 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   sonarqube:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
@@ -17,6 +17,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '11'
+
+    - name: Install unzip
+      run: sudo apt-get update && sudo apt-get install unzip -y
 
     - name: Download Latest SonarQube Scanner
       run: |
@@ -38,8 +41,9 @@ jobs:
     - name: Print working directory
       run: pwd
 
-    - name: Clean up all files in the current directory
+    - name: Clean up _work directory
       run: |
-        echo "Cleaning up all files in the current working directory..."
-        rm -rf ./*
+        echo "Cleaning up _work directory..."
+        cd /home/ubuntu/actions-runner/_work/tsonar/tsonar
+        rm -rf /home/ubuntu/actions-runner/_work/*
 
